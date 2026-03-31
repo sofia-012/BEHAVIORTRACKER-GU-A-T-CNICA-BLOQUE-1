@@ -18,7 +18,7 @@ def pasear_linea(linea):
     diccionario= {}
     diccionario['id_participante']= int(partes[0])
     diccionario['fecha']= partes[1]
-    diccionario['app']= linea[2]
+    diccionario['app']= partes[2]
     diccionario['cantidad_uso']= int(partes[3])
     diccionario['tiempo_uso']= float(partes[4])
     
@@ -43,8 +43,9 @@ def cargar_datos(ruta_archivo):
     lineas= archivo.readlines()
     lista_diccionarios= []
     for linea in lineas:
-        datos= pasear_linea(linea)
-        lista_diccionarios.append(datos)
+        if linea.strip():
+            datos= pasear_linea(linea)
+            lista_diccionarios.append(datos)
         
     return lista_diccionarios
     
