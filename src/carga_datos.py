@@ -39,7 +39,7 @@ def cargar_datos(ruta_archivo):
 
     '''
     
-    archivo= open( 'ruta_archivo' , 'r')
+    archivo= open(ruta_archivo , 'r')
     lineas= archivo.readlines()
     lista_diccionarios= []
     for linea in lineas:
