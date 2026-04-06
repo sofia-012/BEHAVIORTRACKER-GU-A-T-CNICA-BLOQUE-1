@@ -19,7 +19,7 @@ Desarrollar un sistema modular en Python que:
 
 
 ## Integrantes del Grupo
-- Sofia Felisa
+- Sofia Jalil Bestard
 - Guadalupe Merke
 - Miranda Berazategui
 
