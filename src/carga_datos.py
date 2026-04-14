@@ -41,11 +41,32 @@ def cargar_datos(ruta_archivo):
     
     archivo= open(ruta_archivo , 'r')
     lineas= archivo.readlines()
-    lista_diccionarios= []
+    diccionario= {}
+    
     for linea in lineas:
         if linea.strip():
-            datos= pasear_linea(linea)
-            lista_diccionarios.append(datos)
+            registro= pasear_linea(linea)
+            id_p= registro['id_participante']
+            
+            if id_p not in diccionario:
+                diccionario[id_p]= {
+                    'id_participante': id_p,
+                    'fecha': [],
+                    'app': [],
+                    'cantidad_uso': [],
+                    'tiempo_uso': []
+                }
+            
+            
+            diccionario[id_p]['fecha'].append(registro['fecha'])
+            diccionario[id_p]['app'].append(registro['app'])
+            diccionario[id_p]['cantidad_uso'].append(registro['cantidad_uso'])
+            diccionario[id_p]['tiempo_uso'].append(registro['tiempo_uso'])
+            
+    lista_diccionarios = []
+    for id_p in diccionario:
+        lista_diccionarios.append(diccionario[id_p])
+            
     archivo.close()
     return lista_diccionarios
     
