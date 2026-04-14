@@ -46,7 +46,7 @@ def cargar_datos(ruta_archivo):
         if linea.strip():
             datos= pasear_linea(linea)
             lista_diccionarios.append(datos)
-        
+    archivo.close()
     return lista_diccionarios
     
 
