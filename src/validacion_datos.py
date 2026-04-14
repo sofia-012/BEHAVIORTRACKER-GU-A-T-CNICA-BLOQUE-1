@@ -1,0 +1,29 @@
+def validar_registro(dato):
+    '''
+    Verifica que un registro tenga valores válidos.
+
+    Parameters
+    ----------
+    dato : dict
+        Diccionario que representa un registro del datos.
+
+    Returns
+    -------
+    bool
+        True si el registro es válido, False en caso contrario.
+    '''
+
+    try:
+        if dato['cantidad_uso'] < 0:
+            return False
+        
+        if dato['tiempo_uso'] < 0:
+            return False
+        
+        if len(dato['app']) == 0:
+            return False
+        
+        return True
+    
+    except:
+        return False
