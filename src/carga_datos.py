@@ -49,7 +49,6 @@ def cargar_datos(ruta_archivo):
     archivo.close()
     return lista_diccionarios
     
-hola
 
 
 
