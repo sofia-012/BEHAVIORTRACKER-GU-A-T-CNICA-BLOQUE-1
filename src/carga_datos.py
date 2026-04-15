@@ -47,8 +47,10 @@ def cargar_datos(ruta_archivo):
         archivo= open(ruta_archivo , 'r')
         lineas= archivo.readlines()
         diccionario= {}
+        
     except FileNotFoundError: 
         print('archivo no encontrado')
+        return []
     
     for linea in lineas:
         if linea.strip():
