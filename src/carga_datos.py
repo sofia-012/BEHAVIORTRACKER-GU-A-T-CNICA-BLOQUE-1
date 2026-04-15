@@ -14,23 +14,28 @@ def pasear_linea(linea):
 
     '''
     partes = linea.strip().split(',')
-    
-    diccionario= {}
-    diccionario['id_participante']= int(partes[0])
-    diccionario['fecha']= partes[1]
-    diccionario['app']= partes[2]
-    diccionario['cantidad_uso']= int(partes[3])
-    diccionario['tiempo_uso']= float(partes[4])
-    
-    return diccionario
+    try: 
+       diccionario= {}
+       diccionario['id_participante']= int(partes[0])
+       diccionario['fecha']= partes[1]
+       diccionario['app']= partes[2]
+       diccionario['cantidad_uso']= int(partes[3])
+       diccionario['tiempo_uso']= float(partes[4])
+       return diccionario
+   
+    except ValueError as e:
+        print('Numero/valor invalido', e)
+    except:
+        print('error al almacenar datos')
 
 def cargar_datos(ruta_archivo):
     '''
-    Lee el archivo CSV y devuelve una lista de diccionarios (un registro por línea).
+    Lee el archivo CSV y devuelve una lista de diccionarios, donde cada diccionario 
+    corresponde a los datos de un participante (con listas internas).
     Parameters
     ----------
     ruta_archivo : str
-        Ruta completa al archivo CSV (ej: "datos/datos_proyecto.csv")
+        Ruta completa al archivo CSV 
 
     Returns
     -------
@@ -38,10 +43,12 @@ def cargar_datos(ruta_archivo):
         Lista de diccionarios con todos los registros del archivo
 
     '''
-    
-    archivo= open(ruta_archivo , 'r')
-    lineas= archivo.readlines()
-    diccionario= {}
+    try:
+        archivo= open(ruta_archivo , 'r')
+        lineas= archivo.readlines()
+        diccionario= {}
+    except FileNotFoundError: 
+        print('archivo no encontrado')
     
     for linea in lineas:
         if linea.strip():
