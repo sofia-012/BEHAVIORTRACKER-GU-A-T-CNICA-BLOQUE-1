@@ -13,20 +13,15 @@ def pasear_linea(linea):
        Diccionario con los datos estructurados
 
     '''
-    partes = linea.strip().split(',')
-    try: 
-       diccionario= {}
-       diccionario['id_participante']= int(partes[0])
-       diccionario['fecha']= partes[1]
-       diccionario['app']= partes[2]
-       diccionario['cantidad_uso']= int(partes[3])
-       diccionario['tiempo_uso']= float(partes[4])
-       return diccionario
+    partes = linea.strip().split(',') 
+    diccionario= {}
+    diccionario['id_participante']= int(partes[0])
+    diccionario['fecha']= partes[1]
+    diccionario['app']= partes[2]
+    diccionario['cantidad_uso']= int(partes[3])
+    diccionario['tiempo_uso']= float(partes[4])
+    return diccionario
    
-    except ValueError as e:
-        print('Numero/valor invalido', e)
-    except:
-        print('error al almacenar datos')
 
 def cargar_datos(ruta_archivo):
     '''
