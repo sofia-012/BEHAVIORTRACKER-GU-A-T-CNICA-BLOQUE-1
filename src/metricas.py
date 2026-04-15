@@ -34,14 +34,20 @@ def calcular_promedio_uso(datos):
         Promedio de tiempo de uso por registro
 
     '''
-    cantidad_registros= 0
-    tiempo_total= 0
-    for dato in datos:
-        tiempo_total+= dato['tiempo_uso']
-        cantidad_registros += 1
-    promedio= tiempo_total / cantidad_registros
-    return promedio
-
+    try: 
+        cantidad_registros= 0
+        tiempo_total= 0
+        
+        for dato in datos:
+            tiempo_total+= dato['tiempo_uso']
+            cantidad_registros += 1
+            
+      
+        promedio= tiempo_total / cantidad_registros
+        return promedio
+    except ZeroDivisionError as e:
+        print("No se puede dividir por cero", e)
+    return 0
 
 def calcular_uso_por_app(datos):
     '''
