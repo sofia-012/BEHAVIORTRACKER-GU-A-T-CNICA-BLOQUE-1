@@ -2,7 +2,7 @@ from src.carga_datos import cargar_datos
 from src.metricas import calcular_tiempo_total, calcular_promedio_uso, calcular_uso_por_app
 from src.validacion_datos import validar_registro
 
-datos = cargar_datos('BehaviorTracker_mock_data.csv')
+datos = cargar_datos("datos/BehaviorTracker_mock_data.csv")
 datos_validos = []
 
 for d in datos:

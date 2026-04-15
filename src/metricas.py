@@ -13,11 +13,11 @@ def calcular_tiempo_total(datos):
         Tiempo total de uso (en minutos)
 
     '''
-    total= 0
+    total = 0
     for dato in datos:
-        total+= dato['tiempo_uso']
+        for tiempo in dato["tiempo_uso"]:
+            total += tiempo
     return total
-    
     
 def calcular_promedio_uso(datos):
     '''
@@ -39,8 +39,9 @@ def calcular_promedio_uso(datos):
         tiempo_total= 0
         
         for dato in datos:
-            tiempo_total+= dato['tiempo_uso']
-            cantidad_registros += 1
+            for tiempo in dato['tiempo_uso']:
+                tiempo_total += tiempo
+                cantidad_registros += 1
             
       
         promedio= tiempo_total / cantidad_registros
@@ -64,12 +65,17 @@ def calcular_uso_por_app(datos):
         Diccionario con el formato {"nombre_app": tiempo_total}
 
     '''
-    diccionario= {}
+    diccionario = {}
+    
     for dato in datos:
-        app = dato['app']
-        if app not in diccionario:
-            diccionario[app] = 0
-        diccionario[app] += dato['tiempo_uso']
+        for i in range(len(dato['app'])):
+            app = dato['app'][i]
+            tiempo = dato['tiempo_uso'][i]
+            
+            if app not in diccionario:
+                diccionario[app] = 0
+                
+            diccionario[app] += tiempo
             
     return diccionario
         
