@@ -25,8 +25,8 @@ def pasear_linea(linea):
 
 def cargar_datos(ruta_archivo):
     '''
-    Lee el archivo CSV y devuelve una lista de diccionarios, donde cada diccionario 
-    corresponde a los datos de un participante (con listas internas).
+    Lee el archivo CSV y devuelve una lista donde cada elemento es un participante agrupado y cada clave tiene listas adentro. 
+
     Parameters
     ----------
     ruta_archivo : str
