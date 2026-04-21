@@ -47,8 +47,9 @@ def calcular_promedio_uso(datos):
         promedio= tiempo_total / cantidad_registros
         return promedio
     except ZeroDivisionError as e:
-        print("No se puede dividir por cero", e)
-    return 0
+        raise ZeroDivisionError("[ERROR CRÍTICO] Sin registros para calcular el promedio / ubicación: calcular_promedio_uso")
+     
+    
 
 def calcular_uso_por_app(datos):
     '''
