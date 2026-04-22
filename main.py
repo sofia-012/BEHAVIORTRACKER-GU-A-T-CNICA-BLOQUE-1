@@ -28,3 +28,4 @@ else:
             print("Tiempo total:", tiempo_total)
             print("Promedio de uso:", promedio)
             print("Uso por app:", uso_por_app)
+
