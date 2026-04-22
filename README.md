@@ -34,24 +34,22 @@ Desarrollar un sistema modular en Python que:
 - `calcular_tiempo_total()` → Tiempo total de uso
 - `calcular_promedio_uso()` → Promedio de uso
 - `calcular_uso_por_app()` → Uso por aplicación (opcional)
--Objetos
+  ## Objetos
 
--Clase Registro:
+**Clase Registro:**
+- Representa una fila del CSV
+- Atributos: `id_participante`, `fecha`, `app`, `cantidad_uso`, `tiempo_uso`
+- Métodos: mostrar registro, validar registro, obtener tiempo de uso
 
-Representa una fila del CSV
-Atributos: id_participante, fecha, app, cantidad_uso, tiempo_uso
-Métodos: mostrar registro, validar registro, obtener tiempo de uso
+**Clase Participante:**
+- Representa un participante y sus registros
+- Atributos: `id_participante`, `registros`
+- Métodos: agregar registro, calcular tiempo total, calcular promedio, calcular uso por app
 
-Clase Participante:
-
-Representa un participante y sus registros
-Atributos: id_participante, registros
-Métodos: agregar registro, calcular tiempo total, calcular promedio, calcular uso por app
-
-Sistema general:
-
-Representa al sistema
-Atributos: datos, participantes
+**Sistema general:**
+- Representa al sistema
+- Atributos: `datos`, `participantes`
+- Métodos: cargar datos, filtrar por participante, validar, métricas
 Métodos: cargar datos, filtrar por participante, validar, métricas
   
 
