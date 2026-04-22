@@ -35,7 +35,7 @@ Desarrollar un sistema modular en Python que:
 - `calcular_promedio_uso()` → Promedio de uso
 - `calcular_uso_por_app()` → Uso por aplicación (opcional)
 
-  ##Objetos
+  Objetos
  Clase Registro:
  -  Representa una fila del Csv
  -  Atrubutos: id_participantes, fecha, app, cantidad_uso, tiempo_uso
