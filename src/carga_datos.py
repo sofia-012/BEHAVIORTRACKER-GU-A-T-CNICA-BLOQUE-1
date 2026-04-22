@@ -25,43 +25,42 @@ def pasear_linea(linea):
             print("Error: Campo vacío| Ubicación: pasear_linea")
             raise ValueError("Campo vacío")
             
-            
-    diccionario= {}
-    try:
-        diccionario['id_participante']= int(partes[0])
-        if diccionario['id_participante'] <=0:
-            print("Error: id_participante debe ser un entero | Ubicación: pasear_linea")
-            raise ValueError('es valor ingresado no es positivo')
-    
-    except ValueError:
-        print("Error: id_participante debe ser un entero | Ubicación: pasear_linea")
-        raise ValueError
-    
-    
-    diccionario['fecha']= partes[1]
+        diccionario= {}
+        try:
+            diccionario['id_participante']= int(partes[0])
+            if diccionario['id_participante'] <=0:
+                print("Error: id_participante debe ser un entero | Ubicación: pasear_linea")
+                raise ValueError('es valor ingresado no es positivo')
         
-    diccionario['app']= partes[2].strip()
-    apps_validas = ["instagram", "tikTok", "whatsApp", "youTube"]
-    if diccionario['app'] not in apps_validas:
-        print(f"Error: Valor inválido para categoría 'app' ({diccionario['app']}) | Ubicación: pasear_linea")
-        raise ValueError("Valor inválido para app.")
-    
-    try:
-        diccionario['cantidad_uso']= int(partes[3])
-        if diccionario['cantidad_uso']<0:
-            print("Error: cantidad de uso debe ser un entero | Ubicación: pasear_linea")
-            raise ValueError('es valor ingresado no es positivo')
-    except ValueError:
-        print("Error: la cantidad de uso debe ser un entero | Ubicación: pasear_linea")
-        raise ValueError
-    try:
-        diccionario['tiempo_uso']= float(partes[4])
-        if diccionario['tiempo_uso']<0:
-            print("Error: tiempo de uso debe ser positivo | Ubicación: pasear_linea")
-            raise ValueError('es valor ingresado no es positivo')
-    except ValueError:
-        print("Error: el tiempo de uso debe ser un numero| Ubicación: pasear_linea")
-        raise ValueError
+        except ValueError:
+            print("Error: id_participante debe ser un entero | Ubicación: pasear_linea")
+            raise ValueError
+        
+        
+        diccionario['fecha']= partes[1]
+            
+        diccionario['app']= partes[2].strip()
+        apps_validas = ["instagram", "tikTok", "whatsApp", "youTube"]
+        if diccionario['app'] not in apps_validas:
+            print(f"Error: Valor inválido para categoría 'app' ({diccionario['app']}) | Ubicación: pasear_linea")
+            raise ValueError("Valor inválido para app.")
+        
+        try:
+            diccionario['cantidad_uso']= int(partes[3])
+            if diccionario['cantidad_uso']<0:
+                print("Error: cantidad de uso debe ser un entero | Ubicación: pasear_linea")
+                raise ValueError('es valor ingresado no es positivo')
+        except ValueError:
+            print("Error: la cantidad de uso debe ser un entero | Ubicación: pasear_linea")
+            raise ValueError
+        try:
+            diccionario['tiempo_uso']= float(partes[4])
+            if diccionario['tiempo_uso']<0:
+                print("Error: tiempo de uso debe ser positivo | Ubicación: pasear_linea")
+                raise ValueError('es valor ingresado no es positivo')
+        except ValueError:
+            print("Error: el tiempo de uso debe ser un numero| Ubicación: pasear_linea")
+            raise ValueError
         
     return diccionario
    
