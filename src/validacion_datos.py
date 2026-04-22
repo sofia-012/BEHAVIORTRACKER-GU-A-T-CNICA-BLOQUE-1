@@ -35,10 +35,6 @@ def validar_registro(dato):
         if tiempo < 0:
             print("Error: Tiempo de uso negativo | Ubicación: validar_registro")
             return False
-    
-    if dato["tiempo_uso"] != sorted(dato["tiempo_uso"]):
-        print("Error: Tiempo de uso no está ordenado de forma creciente | Ubicación: validar_registro")
-        return False
 
     
     for cantidad_uso in dato["cantidad_uso"]:
@@ -47,7 +43,7 @@ def validar_registro(dato):
             return False
 
    
-    apps_validas = ["Instagram", "TikTok", "WhatsApp", "YouTube"]
+    apps_validas = ["instagram", "tiktok", "whatsapp", "youtube"]
     for app in dato["app"]:
         if app not in apps_validas:
             print(f"Error: Valor inválido en campo app ('{app}') | Ubicación: validar_registro")
