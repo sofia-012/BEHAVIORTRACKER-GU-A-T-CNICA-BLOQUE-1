@@ -40,7 +40,7 @@ def pasear_linea(linea):
         diccionario['fecha']= partes[1]
             
         diccionario['app']= partes[2].strip()
-        apps_validas = ["instagram", "tikTok", "whatsApp", "youTube"]
+        apps_validas = ["Instagram", "TikTok", "WhatsApp", "YouTube"]
         if diccionario['app'] not in apps_validas:
             print(f"Error: Valor inválido para categoría 'app' ({diccionario['app']}) | Ubicación: pasear_linea")
             raise ValueError("Valor inválido para app.")
