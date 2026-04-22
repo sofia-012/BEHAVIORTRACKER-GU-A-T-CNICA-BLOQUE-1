@@ -40,7 +40,7 @@ def pasear_linea(linea):
         diccionario['fecha']= partes[1]
             
         diccionario['app']= partes[2].strip()
-        apps_validas = ["Instagram", "TikTok", "WhatsApp", "YouTube"]
+        apps_validas = ["instagram", "tiktok", "whatsapp", "youtube"]
         if diccionario['app'] not in apps_validas:
             print(f"Error: Valor inválido para categoría 'app' ({diccionario['app']}) | Ubicación: pasear_linea")
             raise ValueError("Valor inválido para app.")
@@ -128,20 +128,7 @@ def cargar_datos(ruta_archivo):
         archivo.close()
         raise ValueError("Base de datos vacía")
 
-    
-    for participante in lista_diccionarios:
-        tiempos = participante['tiempo_uso']
-        if len(tiempos) > 1:
-            ordenado = True
-            for i in range(len(tiempos) - 1):
-                if tiempos[i] > tiempos[i + 1]:
-                    ordenado = False
-                    break
-            
-            if not ordenado:
-                print("Error: La variable tiempo no está ordenada de forma creciente | Ubicación: cargar_datos")
-                archivo.close()
-                raise ValueError("Tiempo no ordenado creciente")
+
                 
     archivo.close()
     return lista_diccionarios
