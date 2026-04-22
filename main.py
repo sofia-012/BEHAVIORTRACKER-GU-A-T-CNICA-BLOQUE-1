@@ -2,6 +2,7 @@ from src.carga_datos import cargar_datos
 from src.metricas import calcular_tiempo_total, calcular_promedio_uso, calcular_uso_por_app
 from src.validacion_datos import validar_registro
 from src.procesamiento_datos import filtrar_por_participante
+
 datos = cargar_datos("datos/BehaviorTracker_mock_data.csv")
 datos_validos = []
 if datos == None:
