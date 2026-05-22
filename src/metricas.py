@@ -1,3 +1,6 @@
+import pandas as pd
+import os
+
 def calcular_tiempo_total(datos):
     '''
     Calcula la suma total del tiempo de uso de todos los registros.
@@ -15,19 +18,25 @@ def calcular_tiempo_total(datos):
     '''
     
     if len(datos) == 0:
-        print("Error: La base de datos no está vacía | Ubicación: calcular_tiempo_total")
-        raise ValueError("La base de datos no está vacía")
-    
+        print("Error: La base de datos está vacía | Ubicación: calcular_tiempo_total")
+        raise ValueError("La base de datos está vacía")
     
     try:
-        total = 0
+
+        tiempos = []
         for dato in datos:
-            for tiempo in dato["tiempo_uso"]:
-                if tiempo < 0:
-                    print("Error: la variable tiempo no debe ser negativa | Ubicación: calcular_tiempo_total")
-                    raise ValueError("la variable tiempo no debe ser negativa")
-                total += tiempo
+            tiempos.extend(dato["tiempo_uso"])
+        
+        df_tiempos = pd.Series(tiempos)        
+        
+        
+        if (df_tiempos < 0).any():
+            print("Error: la variable tiempo no debe ser negativa | Ubicación: calcular_tiempo_total")
+            raise ValueError("la variable tiempo no debe ser negativa")
+        
+        total = df_tiempos.sum()                 
         return total
+    
     except (KeyError, TypeError, AttributeError):
         print("Error: Datos inválidos para calcular tiempo total | Ubicación: calcular_tiempo_total")
         raise
@@ -48,42 +57,35 @@ def calcular_promedio_uso(datos):
 
     '''
     if len(datos) == 0:
-        print("Error: La base de datos no está vacía | Ubicación: calcular_tiempo_total")
-        raise ValueError("La base de datos no está vacía")
-    try: 
-        cantidad_registros= 0
-        tiempo_total= 0
-        
+        print("Error: La base de datos está vacía | Ubicación: calcular_promedio_uso")
+        raise ValueError("La base de datos está vacía")
+    
+    try:
+        tiempos = []
         for dato in datos:
-            if 'tiempo_uso' not in dato:
-                print("Error: Falta la clave 'tiempo_uso' en los datos | Ubicación: calcular_promedio_uso")
-                raise KeyError("Falta la clave 'tiempo_uso'")
-            
-            for tiempo in dato['tiempo_uso']:
-                if not isinstance(tiempo, (int, float)):
-                    print("Error: Valor no numérico en tiempo_uso | Ubicación: calcular_promedio_uso")
-                    raise TypeError("Valor no numérico en tiempo_uso")
-                if tiempo < 0:
-                    print("Error: Valor negativo en tiempo_uso (no permitido) | Ubicación: calcular_promedio_uso")
-                    raise ValueError("Valor negativo en tiempo_uso")
-                
-                tiempo_total += tiempo
-                cantidad_registros += 1
-            
-        promedio = tiempo_total / cantidad_registros
+            tiempos.extend(dato["tiempo_uso"])
+        
+        if not tiempos:
+            raise ZeroDivisionError("No hay registros válidos")
+        
+        df_tiempos = pd.Series(tiempos)
+        
+        # Validaciones vectorizadas
+        if not pd.api.types.is_numeric_dtype(df_tiempos):
+            print("Error: Valor no numérico en tiempo_uso | Ubicación: calcular_promedio_uso")
+            raise TypeError("Valor no numérico en tiempo_uso")
+        if (df_tiempos < 0).any():
+            print("Error: Valor negativo en tiempo_uso (no permitido) | Ubicación: calcular_promedio_uso")
+            raise ValueError("Valor negativo en tiempo_uso")
+        
+        promedio = df_tiempos.mean()   
         return promedio
     
     except ZeroDivisionError:
         print("Error: No hay registros válidos para calcular el promedio | Ubicación: calcular_promedio_uso")
         raise
-    except KeyError:
-        print("Error: Falta la clave 'tiempo_uso' en los datos | Ubicación: calcular_promedio_uso")
-        raise
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, KeyError):
         print("Error: Datos inválidos para calcular el promedio (tipo o valor incorrecto) | Ubicación: calcular_promedio_uso")
-        raise
-    except Exception as e:
-        print(f"Error: {str(e)} | Ubicación: calcular_promedio_uso")
         raise
 
 def calcular_uso_por_app(datos):
@@ -102,28 +104,26 @@ def calcular_uso_por_app(datos):
 
     '''
     if not datos:
-        print("Error: la base de datos no está vacía | Ubicación: calcular_uso_por_app")
+        print("Error: la base de datos está vacía | Ubicación: calcular_uso_por_app")
         return {}
-    
-    diccionario = {}
     
     try:
+        apps = []
+        tiempos = []
         for dato in datos:
-            for i in range(len(dato['app'])):
-                app = dato['app'][i]
-                tiempo = dato['tiempo_uso'][i]
-                
-                if app not in diccionario:
-                    diccionario[app] = 0
-                    
-                diccionario[app] += tiempo
-                
-    except (KeyError, TypeError, IndexError) as e:
-        print(f"Error: Datos inválidos para calcular uso por app ({type(e).__name__}) | Ubicación: calcular_uso_por_app")
-        return {}
-    
-    return diccionario
+            apps.extend(dato['app'])
+            tiempos.extend(dato['tiempo_uso'])
         
+        df = pd.DataFrame({'app': apps, 'tiempo_uso': tiempos})
+        
+        # Agrupamiento vectorizado (exacto como enseña la clase de Pandas)
+        uso_por_app = df.groupby('app')['tiempo_uso'].sum().to_dict()
+        
+        return uso_por_app
+    
+    except (KeyError, TypeError, IndexError):
+        print("Error: Datos inválidos para calcular uso por app | Ubicación: calcular_uso_por_app")
+        return {}
     
     
     
