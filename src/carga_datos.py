@@ -1,3 +1,4 @@
+
 def pasear_linea(linea):
     '''
     Transforma una línea de texto del archivo CSV en un diccionario.
@@ -63,7 +64,10 @@ def pasear_linea(linea):
             raise ValueError
         
     return diccionario
-   
+
+import pandas as pd
+import os
+
 
 def cargar_datos(ruta_archivo):
     '''
@@ -81,15 +85,54 @@ def cargar_datos(ruta_archivo):
 
     '''
     try:
-        archivo = open(ruta_archivo, 'r')
-        lineas = archivo.readlines()
-        
-        
-        if len(lineas) == 0:
-            print("Error: El archivo está vacío | Ubicación: cargar_datos")
-            archivo.close()
-            raise ValueError("Archivo vacío")
-        
+        if not os.path.exists(ruta_archivo):
+            print("Error: La ruta no existe o el archivo no se puede abrir | Ubicación: cargar_datos")
+            raise FileNotFoundError(f"No se encontró el archivo en la ruta: {ruta_archivo}")
+
+        df = pd.read_csv(ruta_archivo, header=None)      
+        df.columns = ['id_participante', 'fecha', 'app', 'cantidad_uso', 'tiempo_uso']
+
+        if df.isna().any().any():
+            print("Error crítico: El archivo contiene campos vacíos | Ubicación: cargar_datos")
+            raise ValueError("Error crítico: El archivo contiene campos vacíos.")
+
+        if (df['id_participante'] <= 0).any():
+            print("Error crítico: Existen id_participante <= 0 | Ubicación: cargar_datos")
+            raise ValueError("Error crítico: Existen id_participante <= 0")
+
+        if (df['cantidad_uso'] < 0).any():
+            print("Error: Cantidad de uso negativa | Ubicación: cargar_datos")
+            raise ValueError("Error: Cantidad de uso negativa")
+
+        if (df['tiempo_uso'] < 0).any():
+            print("Error: Tiempo de uso negativo | Ubicación: cargar_datos")
+            raise ValueError("Error: Tiempo de uso negativo")
+
+        apps_validas = ["instagram", "tiktok", "whatsapp", "youtube"]
+        if not df['app'].isin(apps_validas).all():
+            print("Error: Valor inválido en campo app | Ubicación: cargar_datos")
+            raise ValueError(f"Error: Apps inválidas. Solo se permiten: {apps_validas}")
+
+
+        grupos = df.groupby('id_participante')
+        lista_diccionarios = []
+        for id_p, grupo in grupos:
+            participante = {
+                'id_participante': int(id_p),
+                'fecha': grupo['fecha'].tolist(),
+                'app': grupo['app'].tolist(),
+                'cantidad_uso': grupo['cantidad_uso'].tolist(),
+                'tiempo_uso': grupo['tiempo_uso'].tolist()
+            }
+            lista_diccionarios.append(participante)
+
+        if not lista_diccionarios:
+            print("Error: La base de datos está vacía| Ubicación: cargar_datos")
+            raise ValueError("Base de datos vacía")
+
+        print(f"Datos cargados correctamente con Pandas. {len(lista_diccionarios)} participantes encontrados.")
+        return lista_diccionarios
+
     except FileNotFoundError: 
         print("Error: La ruta no existe o el archivo no se puede abrir | Ubicación: cargar_datos")
         raise
@@ -98,42 +141,3 @@ def cargar_datos(ruta_archivo):
         print("Error: Error al leer el archivo | Ubicación: cargar_datos")
         raise
         
-    diccionario= {}
-    for linea in lineas:
-        if linea.strip():
-            registro= pasear_linea(linea)
-            id_p= registro['id_participante']
-            
-            if id_p not in diccionario:
-                diccionario[id_p]= {
-                    'id_participante': id_p,
-                    'fecha': [],
-                    'app': [],
-                    'cantidad_uso': [],
-                    'tiempo_uso': []
-                }
-            
-            
-            diccionario[id_p]['fecha'].append(registro['fecha'])
-            diccionario[id_p]['app'].append(registro['app'])
-            diccionario[id_p]['cantidad_uso'].append(registro['cantidad_uso'])
-            diccionario[id_p]['tiempo_uso'].append(registro['tiempo_uso'])
-            
-    lista_diccionarios = []
-    for id_p in diccionario:
-        lista_diccionarios.append(diccionario[id_p])
-    
-    if not lista_diccionarios:
-        print("Error: La base de datos está vacía| Ubicación: cargar_datos")
-        archivo.close()
-        raise ValueError("Base de datos vacía")
-
-
-                
-    archivo.close()
-    return lista_diccionarios
-    
-
-
-
-

@@ -14,39 +14,21 @@ def validar_registro(dato):
         Si encuentra un error, imprime el mensaje error antes de retornar False.
     '''
     
-    if len(dato["fecha"]) == 0:
+    if not dato.get('fecha') or len(dato['fecha']) == 0:
         print("Error: Registro sin fechas | Ubicación: validar_registro")
         return False
     
-    if len(dato["app"]) == 0:
+    if not dato.get('app') or len(dato['app']) == 0:
         print("Error: Registro sin apps | Ubicación: validar_registro")
         return False
     
-    if len(dato["cantidad_uso"]) == 0:
+    if not dato.get('cantidad_uso') or len(dato['cantidad_uso']) == 0:
         print("Error: Registro sin datos de cantidad de uso | Ubicación: validar_registro")
         return False
     
-    if len(dato["tiempo_uso"]) == 0:
+    if not dato.get('tiempo_uso') or len(dato['tiempo_uso']) == 0:
         print("Error: Registro sin datos de tiempo | Ubicación: validar_registro")
         return False
 
-    
-    for tiempo in dato["tiempo_uso"]:
-        if tiempo < 0:
-            print("Error: Tiempo de uso negativo | Ubicación: validar_registro")
-            return False
-
-    
-    for cantidad_uso in dato["cantidad_uso"]:
-        if cantidad_uso < 0:
-            print("Error: Cantidad de uso negativa | Ubicación: validar_registro")
-            return False
-
    
-    apps_validas = ["instagram", "tiktok", "whatsapp", "youtube"]
-    for app in dato["app"]:
-        if app not in apps_validas:
-            print(f"Error: Valor inválido en campo app ('{app}') | Ubicación: validar_registro")
-            return False
-
     return True

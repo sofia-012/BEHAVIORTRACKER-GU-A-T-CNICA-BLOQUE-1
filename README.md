@@ -34,7 +34,17 @@ Desarrollar un sistema modular en Python que:
 - `calcular_tiempo_total()` → Tiempo total de uso
 - `calcular_promedio_uso()` → Promedio de uso
 - `calcular_uso_por_app()` → Uso por aplicación (opcional)
-  ## Objetos
+
+## Posible implementacion con pandas
+Esto se lograría modificando principalmente la función cargar_datos() (y eliminando o simplificando la función pasear_linea()) del archivo carga_datos.py. En lugar de abrir manualmente el archivo con open(), leer línea por línea y parsear manualmente cada registro (con split, validaciones manuales y construcción de diccionarios agrupados por participante), se utilizaría pandas.read_csv() para cargar los datos directamente en un DataFrame.
+Se podría agrupar el DataFrame por la columna id_participante para mantener una estructura compatible con el resto del sistema (lista de diccionarios con listas internas)
+
+Funciones que se deberían modificar:
+
+- cargar_datos() (principalmente) y pasear_linea() en carga_datos.py.
+- Posibles ajustes en filtrar_por_participante(), validar_registro() y las funciones de métricas (calcular_tiempo_total(), calcular_promedio_uso(), calcular_uso_por_app()) para aprovechar las opciones de Pandas (groupby, sum, mean, etc.) y mejorar el rendimiento y la validación de datos.
+
+## Objetos
 
 **Clase Registro:**
 - Representa una fila del CSV
