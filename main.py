@@ -10,9 +10,9 @@ from src.procesamiento_datos import filtrar_por_participante
 ruta_datos = "datos/BehaviorTracker_mock_data.csv"
 
 def generar_graficos(datos_participante, id_participante, uso_por_app):
-    """Genera 2 gráficos básicos usando solo lo visto en la clase de Matplotlib"""
-    os.makedirs('graficos')
-
+    if not os.path.exists('graficos'):
+        os.makedirs('graficos')
+    
     # Gráfico 1: Barras - Uso por aplicación
     plt.figure()
     plt.bar(uso_por_app.keys(), uso_por_app.values())
@@ -34,7 +34,7 @@ def generar_graficos(datos_participante, id_participante, uso_por_app):
             acum += dato['tiempo_uso'][i]
             tiempos_acum.append(acum)
             fechas.append(dato['fecha'][i])
-    
+   
     plt.plot(fechas, tiempos_acum)
     plt.title('Evolución del Uso')
     plt.xlabel('Fecha')
@@ -43,9 +43,8 @@ def generar_graficos(datos_participante, id_participante, uso_por_app):
     plt.tight_layout()
     plt.savefig('graficos/evolucion_temporal.png')
     plt.close()
-
+    
     print("Gráficos guardados en la carpeta graficos/")
-
 
 #Programa principal
 datos = cargar_datos(ruta_datos)
