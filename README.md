@@ -28,6 +28,39 @@ Desarrollar un sistema modular en Python que:
 2. Ejecutar `main.py`
 3. El programa cargará los datos, los procesará y mostrará las métricas calculadas
 
+## Guía de Ejecución de la Interfaz Web
+
+### Requisitos previos
+Asegurarse de tener instaladas las dependencias necesarias. Podés instalarlas ejecutando:
+
+```bash
+pip install streamlit pandas matplotlib
+```
+
+### Cómo lanzar el dashboard
+
+Desde la raíz del repositorio, ejecutá el siguiente comando en la terminal:
+
+```bash
+streamlit run app.py
+```
+
+Streamlit abrirá automáticamente el dashboard en tu navegador en la dirección:
+
+```
+http://localhost:8501
+```
+
+### Uso del dashboard
+1. **Cargá un archivo CSV** arrastrándolo al componente de carga (podés usar cualquiera de los archivos en `datos/`).
+2. Si el archivo contiene errores de formato o datos inválidos, el sistema mostrará un mensaje de error descriptivo y bloqueará el avance.
+3. Si el archivo es válido, **seleccioná un participante** del menú desplegable.
+4. El dashboard mostrará automáticamente:
+   - 4 tarjetas de KPIs (tiempo total, promedio por sesión, total de registros, app favorita)
+   - Gráfico de barras de uso por aplicación
+   - Gráfico de evolución temporal acumulada
+   - Tabla detallada de registros (expandible)
+
 ## Funciones implementadas
 - `cargar_datos()` y `parsear_linea()` → Lectura y estructuración de datos
 - `filtrar_por_participante()` → Filtrado por participante
