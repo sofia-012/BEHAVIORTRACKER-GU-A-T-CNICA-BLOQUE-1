@@ -1,47 +1,41 @@
-# Actividad 8: Interfaz de Usuario y Documentaci√≥n con IA
+Actividad 8: Interfaz de Usuario y Documentación con IA
 
-## Prompt (estructura ROCA)
+Prompt (estructura ROCA)
 
-**ROL**
+ROL
+Sos un experto en diseño de interfaces web con Python y Streamlit, con experiencia en arquitectura de software modular, diseño de interfaces web y uso de Streamlit.
 
-Sos un experto en dise√±o de interfaces web con Python y Streamlit, con experiencia en arquitectura de software modular, diseño de interfaces web y uso de Streamlit.
-
-**OBJETIVO**
-
+OBJETIVO
 Necesito construir el archivo app.py: una interfaz web interactiva (Dashboard) con Streamlit para el proyecto BehaviorTracker. El dashboard debe integrarse sobre los módulos de backend ya existentes SIN modificarlos.
 
-**CONTEXTO**
-
-El sistema BehaviorTracker analiza patrones de uso de aplicaciones m√≥viles. El backend ya cuenta con los siguientes modulos en src/:
-
+CONTEXTO
+El sistema BehaviorTracker analiza patrones de uso de aplicaciones móviles. El backend ya cuenta con los siguientes módulos en src/:
 - carga_datos.py: función cargar_datos(ruta) que lee un CSV con columnas [id_participante, fecha, app, cantidad_uso, tiempo_uso], valida cada campo y lanza ValueError con mensaje descriptivo si detecta errores. Devuelve una lista de diccionarios agrupados por participante.
 - metricas.py: funciones calcular_tiempo_total(datos), calcular_promedio_uso(datos), calcular_uso_por_app(datos).
-- procesamiento_datos.py: funci√≥n filtrar_por_participante(datos, id).
+- procesamiento_datos.py: función filtrar_por_participante(datos, id).
 - validacion_datos.py: función validar_registro(dato).
+El CSV tiene este formato (sin encabezado):
+  id_participante,fecha,app,cantidad_uso,tiempo_uso
 
-El CSV tiene este formato (sin encabezado): id_participante, fecha, app, cantidad_uso, tiempo_uso
-
-**ACCIÓN**
-
+ACCIÓN
 Programá el archivo app.py con Streamlit siguiendo obligatoriamente este flujo:
-
 1. st.file_uploader para que el usuario cargue el CSV.
-2. Llamar a cargar_datos(); capturar ValueError con st.error() y st.stop() si el archivo es invalido.
+2. Llamar a cargar_datos(); capturar ValueError con st.error() y st.stop() si el archivo es inválido.
 3. st.selectbox para elegir el participante.
-4. Mostrar 4 KPIs con st.metric: tiempo total, promedio por sesi√≥n, total de registros, app más usada.
+4. Mostrar 4 KPIs con st.metric: tiempo total, promedio por sesión, total de registros, app más usada.
 5. Dos gráficos con st.pyplot en columnas: barras por app y línea de evolución temporal acumulada.
 6. st.expander con st.dataframe para el detalle de registros.
+No modifiques ningún módulo de src/. Solo creá app.py.
 
-No modifiques ningún módulo de src/. Solo crea app.py.
+Errores y correcciones
 
-## Errores y correcciones
+Error: los gráficos no se cerraban correctamente entre reruns de Streamlit, causando superposición de figuras.
 
-**Error:** los gráficos no se cerraban correctamente entre reruns de Streamlit, causando superposición de figuras.
+Prompt de corrección:
+"Después de cada st.pyplot(fig), agregá plt.close(fig) para liberar la figura de memoria y evitar que Streamlit acumule plots entre interacciones del usuario."
 
-**Prompt de corrección:** "Despues de cada st.pyplot(fig), agreg plt.close(fig) para liberar la figura de memoria y evitar que Streamlit acumule plots entre interacciones del usuario."
+Reflexión
 
-## Reflexión
-
-El único error que tuvimos fue que los gráficos se superponían cada vez que el usuario interactuaba con el dashboard. Lo que pasaba era que Streamlit volvía a ejecutar el código pero los gráficos anteriores no se borraban de la memoria. Lo solucionamos diciendole a la IA exactamente qué estaba pasando y qué queríamos que hiciera, y lo corrigió en el primer intento.
+El único error que tuvimos fue que los gráficos se superponían cada vez que el usuario interactuaba con el dashboard. Lo que pasaba era que Streamlit volvía a ejecutar el código pero los gráficos anteriores no se borraban de la memoria. Lo solucionamos diciéndole a la IA exactamente qué estaba pasando y qué queríamos que hiciera, y lo corrigió en el primer intento.
 
 Lo que aprendimos es que mientras más detallado y claro sea el prompt inicial, menos veces hay que corregirle cosas a la IA después.
